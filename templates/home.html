@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Css import -->
+    <!-- <link href="../static/style.css" rel="stylesheet"> -->
+    <!-- Garph -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- Logo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Form Logo Size -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <script src="{% static 'js/index.js'%}"></script>
+    <!-- Jquery -->
+
+    <!-- ag-gri -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css"> -->
+
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg " style="background-color: white;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="color: #EF4765;">Analytics Panal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success btnStyle" type="submit">Search</button>
+            </form>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br />
+
+    <div class="sideBar">
+        <ul class="w3-ul myli">
+            <!-- <li><i class="fa fa-home"></i> </li> -->
+            <!-- <li class="w3-large"><i class="fa fa-home"></i> Home</li>
+            <li class="w3-xlarge"><i class="fa fa-home"></i> Home</li> -->
+            <a href="{% url 'home' %}">
+                <li class="w3-large logoColor" style="padding: 17px 20px;"><i class="fa fa-home"></i><span class="sideBarText">Trade</span> </li>
+            </a>
+            <a href="{% url 'category' %}">
+                <li class="w3-large logoColor" style="padding: 17px 20px;"><i class="fa fa-cloud"></i><span class="sideBarText">Category</span> </li>
+            </a>
+            <a href="{% url 'head' %}">
+                <li class="w3-large logoColor" style="padding: 17px 20px;"><i class="fa fa-search"></i> <span class="sideBarText">Head</span> </li>
+            </a>
+            <!-- <li class="w3-large logoColor"><i class="fa fa-trash"></i> </li> -->
+
+            <!-- <li class="w3-xxxlarge"><i class="fa fa-home"></i> </li> -->
+            <!-- <li class="w3-jumbo w3-teal"><i class="fa fa-home"></i> Home</li> -->
+        </ul>
+    </div>
+    <div class="container mainCont divContCenter">
+        <!-- <button onclick="requestCall()"> Call</button> -->
+        <h3>
+            Analytics Panal(Trade)
+        </h3>
+        <div class="container filterDiv">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+                <div class="col">
+                    <span class="categoriesFont">
+                        {% csrf_token %}
+                        <select id="dropDownData" onchange="dropDownData()" class="form-select form-select-sm dropDown"
+                            aria-label=".form-select-sm example">
+                            <option selected>Select Date</option>
+                            <option value="1">Past 6 Months </option>
+                            <option value="2">Past 12 Months </option>
+                            <option value="3">MTD </option>
+                            <option value="4">Quarter</option>
+                            <option value="5">FY </option>
+                        </select>
+                    </span>
+                </div>
+                <div class="col">
+                    <!-- <span class="categoriesFont">
+                        <select class="form-select form-select-sm dropDown" aria-label=".form-select-sm example">
+                            <option selected>Category</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </span> -->
+                </div>
+                <div class="col">
+                    <!-- <span class="categoriesFont">
+
+                        <select class="form-select form-select-sm dropDown" aria-label=".form-select-sm example">
+                            <option selected>Head</option>
+
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </span> -->
+                </div>
+                <div class="col">
+                    <!-- <span class="categoriesFont">
+                        <select class="form-select form-select-sm dropDown" aria-label=".form-select-sm example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </span> -->
+                </div>
+            </div>
+        </div>
+        <div class="container dateDiv">
+            <div class="row">
+                <div class="col">
+                    <div class="dataPickerDiv " id="dateAdd">
+
+                    </div>
+                </div>
+                <!-- <div class="col" id="addDifferentDate">
+                    dd
+                </div>
+                <div class="col">
+                    <div class="dataPickerDiv ">
+                        <span class="dataPickerText">
+                            Past 12 Months
+                        </span>
+                        <input class="dataPicker" type="date" id="birthday" name="birthday">
+                    </div>
+                </div> -->
+
+                <div class="col">
+                    <div class="dataPickerDiv " id="qYear">
+
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- <div class="dataPickerDiv ">
+                        <span class="dataPickerText">
+                            FY
+                        </span>
+                        <input class="dataPicker" type="date" id="birthday" name="birthday">
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row dateDiv">
+            <div class="col-sm">
+                <!-- <button class="button-87" role="button">Button 87</button> -->
+                <!-- <button class="button-62" role="button">Button 62</button> -->
+            </div>
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="row">
+            <div class="col smallDiv">
+                Data
+
+            </div>
+            <div class="col smallDiv">Data</div>
+            <div class="col smallDiv">Data</div>
+            <div class="col smallDiv">Data
+
+            </div>
+        </div>
+        <div class="divContCenter">
+            text text center Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis fuga aut expedita modi pariatur officiis illo voluptates eius magnam dolorem consequatur facere nemo sit quae id qui, dicta repellendus itaque!
+        </div>
+        <!-- <div class="divContCenter" id="tableDiv">
+            <div id="myGrid" style="height: 500px; width:500px;" class="ag-theme-balham"></div>
+        </div> -->
+
+        <div class="row">
+
+            <div class="col-6 colSec">
+                <div class="table-responsive">
+
+                    <table class="table  table-striped table-hover tablecss">
+                        <thead class="table blueColor">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <button id="buttonClick" onclick="addTable()">Get</button>
+                <div id="tableDiv"></div>
+            </div>
+            <div class="col-5 colSec">
+                <canvas id="myChart" style="width:90%;max-width:500px"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <!-- line graph -->
+    <script>
+        var xArray = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+        var yArray = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+        // Define Data
+        var data = [{
+            x: xArray,
+            y: yArray,
+            mode: "lines"
+        }];
+
+        // Define Layout
+        var layout = {
+            xaxis: {
+                range: [40, 160],
+                title: "Square Meters"
+            },
+            yaxis: {
+                range: [5, 16],
+                title: "Price in Millions"
+            },
+            title: "House Prices vs. Size"
+        };
+
+        // Display using Plotly
+        Plotly.newPlot("myPlot", data, layout);
+    </script>
+
+    <!-- point graph -->
+    <script>
+        var xyValues = [{
+            x: 50,
+            y: 7
+        }, {
+            x: 60,
+            y: 8
+        }, {
+            x: 70,
+            y: 8
+        }, {
+            x: 80,
+            y: 9
+        }, {
+            x: 90,
+            y: 9
+        }, {
+            x: 100,
+            y: 9
+        }, {
+            x: 110,
+            y: 10
+        }, {
+            x: 120,
+            y: 11
+        }, {
+            x: 130,
+            y: 14
+        }, {
+            x: 140,
+            y: 14
+        }, {
+            x: 150,
+            y: 15
+        }];
+
+        new Chart("myChart", {
+            type: "scatter",
+            data: {
+                datasets: [{
+                    pointRadius: 4,
+                    pointBackgroundColor: "rgb(0,0,255)",
+                    data: xyValues
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            min: 40,
+                            max: 160
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 6,
+                            max: 16
+                        }
+                    }],
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
