@@ -25,7 +25,7 @@ SECRET_KEY = '(#a8d2jvmc^774+&@i5fbs&6158_1o8el_ziibegf(oe8-rkv!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'dash-django.herokuapp.com']
 
 
 # Application definition
